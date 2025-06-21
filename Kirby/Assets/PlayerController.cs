@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundMask;
     private float verticalRotation = 0f;
     private Vector3 moveDirection;
+
+    public Animator animator;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
