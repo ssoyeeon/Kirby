@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,9 +16,12 @@ public class PlayerController : MonoBehaviour
 
     public Animator animator;
 
+    public CinemachineVirtualCamera camera;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        //camera.m_Lens.Dutch = 180;        //카메라 반전
     }
 
     void Update()
