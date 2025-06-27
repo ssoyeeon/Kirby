@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,12 +17,23 @@ public class PlayerController : MonoBehaviour
 
     public Animator animator;
 
-    public CinemachineVirtualCamera camera;
+    public CinemachineVirtualCamera Vircamera;
+
+    private void Awake()
+    {
+        if (GameManager.Instance.isClick == true)
+        {
+            this.gameObject.transform.position = GameManager.Instance.savePoint;
+        }
+        else
+            this.gameObject.transform.position = new Vector3(0, 0, 0);
+    }
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         //camera.m_Lens.Dutch = 180;        //카메라 반전
+        //GameManager.Instance
     }
 
     void Update()
@@ -40,6 +52,10 @@ public class PlayerController : MonoBehaviour
         moveDirection = transform.right * moveX + transform.forward * moveZ;
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1f); // 대각선 이동 속도 정규화
 
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("New Scene");
+        }
     }
     void FixedUpdate()
     {
@@ -64,6 +80,12 @@ public class PlayerController : MonoBehaviour
         if(other.CompareTag("Tomato"))
         {
             Drink();
+            Destroy(other.gameObject);
+        }
+        if(other.CompareTag("Save1"))
+        {
+            GameManager.Instance.savePoint = other.gameObject.transform.position;
+            GameManager.Instance.isSaved = true;
         }
     }
 
