@@ -17,7 +17,12 @@ public class PlayerController : MonoBehaviour
 
     public Animator animator;
 
-    public CinemachineVirtualCamera Vircamera;
+    public CinemachineVirtualCamera virCamera;
+
+    public GameObject boss;
+
+    bool isDrink;
+    bool isBoss;
 
     private void Awake()
     {
@@ -32,7 +37,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         //Cursor.lockState = CursorLockMode.Locked;
-        //camera.m_Lens.Dutch = 180;        //카메라 반전
+        //virCamera.m_Lens.Dutch = 180;        //카메라 반전
         //GameManager.Instance
     }
 
@@ -55,6 +60,15 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("New Scene");
+        }
+
+        if(isDrink == true)
+        {
+            Drink();
+        }
+        if(isBoss == true)
+        {
+            LookCamera();
         }
     }
     void FixedUpdate()
@@ -79,7 +93,7 @@ public class PlayerController : MonoBehaviour
     {
         if(other.CompareTag("Tomato"))
         {
-            Drink();
+            isDrink = true;
             Destroy(other.gameObject);
         }
         if(other.CompareTag("Save1"))
@@ -87,18 +101,51 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.savePoint = other.gameObject.transform.position;
             GameManager.Instance.isSaved = true;
         }
+        if(other.CompareTag("Boss"))
+        {
+            isBoss = true;
+        }
+    }
+
+    void LookCamera()
+    {
+        if(isBoss == true)
+        {
+            virCamera.m_LookAt.position = boss.transform.position;
+            float timer = 3;
+            timer -= Time.deltaTime;
+
+            if(timer < 0)
+            {
+                timer = 0;
+                virCamera.m_LookAt.position = this.gameObject.transform.position;
+
+                isBoss = false;
+
+            }
+
+
+        }
     }
 
     void Drink()
     {
-        float time = 1f;
-        
-        time -= Time.deltaTime;
-        if (time <= 0)
+        if(isDrink == true)
         {
-            moveSpeed = 5;
-            time = 0;
+            float time = 1f;
+
+            time -= Time.deltaTime;
+            if (time <= 0)
+            {
+                moveSpeed = 5;
+                time = 0;
+            }
+            else moveSpeed += 2;
+            if(time < 0)
+            {
+                isDrink = false;
+                time = 0;
+            }
         }
-        else moveSpeed += 2;
     }
 }
