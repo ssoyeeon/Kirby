@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+
+    [SerializeField] private float moveSpeed = 5f;
     public float mouseSensitivity = 2f;
     public Rigidbody rb;
     public Transform cameraTransform;
@@ -23,6 +24,9 @@ public class PlayerController : MonoBehaviour
 
     bool isDrink;
     bool isBoss;
+
+    float drinkTimer;
+    float bossTimer;
 
     private void Awake()
     {
@@ -64,13 +68,30 @@ public class PlayerController : MonoBehaviour
 
         if(isDrink == true)
         {
-            Drink();
+            drinkTimer -= Time.deltaTime;
+            moveSpeed = 7;
+            if (drinkTimer <= 0)
+            {
+                moveSpeed = 5;
+                drinkTimer = 0;
+                isDrink = false;
+            }
         }
-        if(isBoss == true)
+        else moveSpeed = 5;
+
+        if (isBoss == true)
         {
-            LookCamera();
+            bossTimer -= Time.deltaTime;
+            virCamera.m_LookAt.position = boss.transform.position;
+            if (bossTimer <= 0)
+            {
+                bossTimer = 0;
+                virCamera.m_LookAt.position = this.transform.position;
+                isBoss = false;
+            }
         }
     }
+
     void FixedUpdate()
     {
         Movement();
@@ -95,6 +116,7 @@ public class PlayerController : MonoBehaviour
         {
             isDrink = true;
             Destroy(other.gameObject);
+            drinkTimer = 1f;
         }
         if(other.CompareTag("Save1"))
         {
@@ -104,48 +126,7 @@ public class PlayerController : MonoBehaviour
         if(other.CompareTag("Boss"))
         {
             isBoss = true;
-        }
-    }
-
-    void LookCamera()
-    {
-        if(isBoss == true)
-        {
-            virCamera.m_LookAt.position = boss.transform.position;
-            float timer = 3;
-            timer -= Time.deltaTime;
-
-            if(timer < 0)
-            {
-                timer = 0;
-                virCamera.m_LookAt.position = this.gameObject.transform.position;
-
-                isBoss = false;
-
-            }
-
-
-        }
-    }
-
-    void Drink()
-    {
-        if(isDrink == true)
-        {
-            float time = 1f;
-
-            time -= Time.deltaTime;
-            if (time <= 0)
-            {
-                moveSpeed = 5;
-                time = 0;
-            }
-            else moveSpeed += 2;
-            if(time < 0)
-            {
-                isDrink = false;
-                time = 0;
-            }
+            bossTimer = 3;
         }
     }
 }
