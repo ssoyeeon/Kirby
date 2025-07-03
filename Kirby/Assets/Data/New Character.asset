@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34ef6d5fcbeb3149b315ee2bc4bfe7a, type: 3}
+  m_Name: New Character
+  m_EditorClassIdentifier: 
+  characterName: "\uCF69"
+  nameColor: {r: 1, g: 1, b: 1, a: 1}
+  characterPortrait: {fileID: 0}
+  aSound: {fileID: 8300000, guid: c3f1e277bacba7a4ab2dbd0ddcc7955d, type: 3}
+  eSound: {fileID: 8300000, guid: b21776c14fa40df43a69392d3e724f9c, type: 3}
+  iSound: {fileID: 8300000, guid: 7777f73b9843092418c099d6f256c055, type: 3}
+  oSound: {fileID: 8300000, guid: 3bd56670062e85841bd9ca1affda123c, type: 3}
+  uSound: {fileID: 8300000, guid: 7dca9b1cd1897954dbcf11b3b0b60257, type: 3}
+  defaultSound: {fileID: 8300000, guid: c4bd5935cbd27284b9297c025ca88856, type: 3}
+  pitch: 1.5
+  volume: 2
+  typingSpeed: 0.15
+  description: 
