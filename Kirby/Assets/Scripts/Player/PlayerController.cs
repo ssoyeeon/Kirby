@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using static UnityEditor.PlayerSettings;
 
 public class PlayerController : MonoBehaviour
 {
@@ -29,11 +30,18 @@ public class PlayerController : MonoBehaviour
     float bossTimer;
 
     public int Php = 100;
+    Vector3 asd;
+    public KeyCode PowerRoarKey = KeyCode.Q;          //Â÷Áö
+    public KeyCode BeatShotKey = KeyCode.E;          //¸®µë
+    public KeyCode GuitarFinisherKey = KeyCode.X;        //±Ã
+
+    GameManager gameManager;
 
     private void Awake()
     {
         if (GameManager.Instance.isClick == true)
         {
+            GameManager.Instance.LoadVector();
             this.gameObject.transform.position = GameManager.Instance.savePoint;
         }
         else
@@ -124,6 +132,7 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.Instance.savePoint = other.gameObject.transform.position;
             GameManager.Instance.isSaved = true;
+            GameManager.Instance.SaveVector();
         }
         if(other.CompareTag("Boss"))
         {
@@ -135,5 +144,37 @@ public class PlayerController : MonoBehaviour
     public void DamagedAttack(int Damage)
     {
         Php -= Damage;
+        if(Php <= 0)
+        {
+            Debug.Log("ÇÃ·¹ÀÌ¾î ÁÖ°Å¶¥");
+        }
+    }
+
+    public void PlayerAttack(SkillType skill)
+    {
+        switch(skill)
+        {
+            case SkillType.SonicRoar:
+                Debug.Log("SonicRoar!!!!!!");
+                break;
+            case SkillType.PowerRoar:
+
+                break;
+            case SkillType.BeatShot:
+
+                break;
+            case SkillType.GuitarFinisher:
+
+                break;
+        }
+
+    }
+
+    public enum SkillType
+    {
+        SonicRoar,
+        PowerRoar,
+        BeatShot,
+        GuitarFinisher
     }
 }

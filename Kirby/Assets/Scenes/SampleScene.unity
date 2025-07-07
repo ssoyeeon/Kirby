@@ -2408,6 +2408,10 @@ MonoBehaviour:
   animator: {fileID: 1227566802}
   virCamera: {fileID: 156663207}
   boss: {fileID: 1089865611}
+  Php: 100
+  PowerRoarKey: 113
+  BeatShotKey: 101
+  GuitarFinisherKey: 120
 --- !u!136 &1227566805
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3009,9 +3013,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34625dbd1c012ea41bb18444e5ac99b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 0
-  hp: 0
+  attackDamage: 10
+  hp: 200
   target: {fileID: 205481188}
+  playerController: {fileID: 0}
 --- !u!195 &2114061588
 NavMeshAgent:
   m_ObjectHideFlags: 0
