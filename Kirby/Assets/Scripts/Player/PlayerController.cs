@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
     float drinkTimer;
     float bossTimer;
 
+    public int Php = 100;
+
     private void Awake()
     {
         if (GameManager.Instance.isClick == true)
@@ -128,5 +130,10 @@ public class PlayerController : MonoBehaviour
             isBoss = true;
             bossTimer = 3;
         }
+    }
+
+    public void DamagedAttack(int Damage)
+    {
+        Php -= Damage;
     }
 }
