@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    
-    private PlayerController playerController;
     public Vector3 savePoint;
 
     public bool isSaved = false;
@@ -27,13 +25,17 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    void Start()
+    public void SaveVector()
     {
-        
+        PlayerPrefs.SetFloat("PosX", savePoint.x);
+        PlayerPrefs.SetFloat("PosY", savePoint.y);
+        PlayerPrefs.SetFloat("PosZ", savePoint.z);
+        PlayerPrefs.Save();
     }
-
-    void Update()
+    public void LoadVector()
     {
-
+        savePoint.x = PlayerPrefs.GetFloat("PosX", 0);
+        savePoint.y = PlayerPrefs.GetFloat("PosY", 0);
+        savePoint.z = PlayerPrefs.GetFloat("PosZ", 0);
     }
 }
