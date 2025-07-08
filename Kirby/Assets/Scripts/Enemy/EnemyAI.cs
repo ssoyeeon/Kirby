@@ -8,7 +8,6 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public int attackDamage = 10;      //공격 대미지
-    public float hp = 100f;          //체력
 
     public Transform target;        //플레이어
 
