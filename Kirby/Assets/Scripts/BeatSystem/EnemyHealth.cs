@@ -38,6 +38,7 @@ public class EnemyHealth : MonoBehaviour
         Renderer renderer = GetComponent<Renderer>();
         if (renderer != null)
         {
+            Debug.Log("¾Æ¾ß!");
             Color originalColor = renderer.material.color;
             renderer.material.color = Color.green;
             yield return new WaitForSeconds(0.2f);

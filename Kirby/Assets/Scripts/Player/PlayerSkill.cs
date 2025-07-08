@@ -8,6 +8,7 @@ public class PlayerSkill : MonoBehaviour
     PlayerController controller;
     public float beatShotCoolTimer;
     public float powerCoolTimer;
+    public float powerTimer;
     public float guitarFinisherCoolTimer; 
     public float SonicRoarCoolTimer; 
     public EnemyHealth enemy;
@@ -31,41 +32,41 @@ public class PlayerSkill : MonoBehaviour
     }
     void Update()
     {
-        if(SonicRoarCoolTimer > 0)
-        {
-            SonicRoarCoolTimer -= Time.deltaTime; 
-            if (SonicRoarCoolTimer <= 0)
-            {
-                PlayerStates(States.Default);
-            }
-        }
+        //if(SonicRoarCoolTimer > 0)
+        //{
+        //    SonicRoarCoolTimer -= Time.deltaTime; 
+        //    if (SonicRoarCoolTimer <= 0)
+        //    {
+        //        PlayerStates(States.Default);
+        //    }
+        //}
 
-        if (beatShotCoolTimer > 0)
-        {
-            beatShotCoolTimer -= Time.deltaTime;
-            if (beatShotCoolTimer <= 0)
-            {
-                PlayerStates(States.Default);
-            }
-        }
+        //if (beatShotCoolTimer > 0)
+        //{
+        //    beatShotCoolTimer -= Time.deltaTime;
+        //    if (beatShotCoolTimer <= 0)
+        //    {
+        //        PlayerStates(States.Default);
+        //    }
+        //}
 
-        if (powerCoolTimer > 0)
-        {
-            powerCoolTimer -= Time.deltaTime;
-            if (powerCoolTimer <= 0)
-            {
-                PlayerStates(States.Default);
-            }
-        }
+        //if (powerCoolTimer > 0)
+        //{
+        //    powerCoolTimer -= Time.deltaTime;
+        //    if (powerCoolTimer <= 0)
+        //    {
+        //        PlayerStates(States.Default);
+        //    }
+        //}
 
-        if(guitarFinisherCoolTimer > 0)
-        {
-            guitarFinisherCoolTimer -= Time.deltaTime; 
-            if (guitarFinisherCoolTimer <= 0)
-            {
-                PlayerStates(States.Default);
-            }
-        }
+        //if(guitarFinisherCoolTimer > 0)
+        //{
+        //    guitarFinisherCoolTimer -= Time.deltaTime; 
+        //    if (guitarFinisherCoolTimer <= 0)
+        //    {
+        //        PlayerStates(States.Default);
+        //    }
+        //}
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -74,7 +75,12 @@ public class PlayerSkill : MonoBehaviour
 
         if(Input.GetKey(KeyCode.Q))
         {
-            PlayerStates(States.PowerRoar);
+            powerTimer += Time.deltaTime;
+            Debug.Log(powerTimer);
+            if(powerTimer >= 3)
+            {
+                PlayerStates(States.PowerRoar);
+            }
 
         }
 
@@ -102,46 +108,36 @@ public class PlayerSkill : MonoBehaviour
                 }
                 break;
             case States.PowerRoar:
-                float powerTimer = 3f;
-                powerTimer -= Time.deltaTime;
-                if(powerTimer <= 0)
-                {
-                    //아니 이거 내적을 어떻게 구해요?? 
-                    Collider[] enemies = Physics.OverlapSphere(transform.position, attackRange, enemyLayer);
+                //아니 이거 내적을 어떻게 구해요?? 
+                Collider[] enemies = Physics.OverlapSphere(transform.position, attackRange, enemyLayer);
                     
-                    foreach (Collider enemys in enemies)
-                    {
-                        Vector3 target = (enemys.transform.position - transform.position).normalized;
-                        float angle = Vector3.Angle(transform.forward, target);
-
-                        if(angle < 90f / 2)
-                        {
-                            EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-                            if (enemyHealth != null)
-                            {
-                                enemyHealth.TakeDamage(10, true);
-                            }
-                        }
-                    }
-                }
-                break;
-            case States.BeatShot:
-                this.GetComponent<RhythmAttackSystem>().enabled = true;
-                break;
-            case States.GuitarFinisher:
-                float guitarTimer = 3f;
-                guitarTimer -= Time.deltaTime;
-                if (guitarTimer <= 0)
+                foreach (Collider enemys in enemies)
                 {
-                    Collider[] enemies = Physics.OverlapSphere(transform.position, attackRange, enemyLayer);
+                    Vector3 target = (enemys.transform.position - transform.position).normalized;
+                    float angle = Vector3.Angle(transform.forward, target);
 
-                    foreach (Collider enemy in enemies)
+                    if(angle < 90f / 2)
                     {
                         EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
                         if (enemyHealth != null)
                         {
                             enemyHealth.TakeDamage(10, true);
                         }
+                    }
+                }
+                powerTimer = 0;
+                break;
+            case States.BeatShot:
+                this.GetComponent<RhythmAttackSystem>().enabled = true;
+                break;
+            case States.GuitarFinisher:
+                Collider[] enemiess = Physics.OverlapSphere(transform.position, attackRange, enemyLayer);
+                foreach (Collider enemy in enemiess)
+                {
+                    EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+                    if (enemyHealth != null)
+                    {
+                        enemyHealth.TakeDamage(10, true);
                     }
                 }
                 break;

@@ -150,31 +150,5 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void PlayerAttack(SkillType skill)
-    {
-        switch(skill)
-        {
-            case SkillType.SonicRoar:
-                Debug.Log("SonicRoar!!!!!!");
-                break;
-            case SkillType.PowerRoar:
 
-                break;
-            case SkillType.BeatShot:
-
-                break;
-            case SkillType.GuitarFinisher:
-
-                break;
-        }
-
-    }
-
-    public enum SkillType
-    {
-        SonicRoar,
-        PowerRoar,
-        BeatShot,
-        GuitarFinisher
-    }
 }
