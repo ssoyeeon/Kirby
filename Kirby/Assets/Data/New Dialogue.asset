@@ -22,5 +22,5 @@ MonoBehaviour:
     message: "\uC548\uB155 \uC548\uB155 \uB098\uB294 \uC8FC\uC5F0\uC774\uC58C "
     useSlowTyping: 0
     useEmphasis: 0
-  loopDialogue: 1
+  loopDialogue: 0
   description: 

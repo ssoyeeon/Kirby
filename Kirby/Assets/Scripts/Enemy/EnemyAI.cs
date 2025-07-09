@@ -38,7 +38,7 @@ public class EnemyAI : MonoBehaviour
     void Move()
     {
         dis = transform.position - target.position;
-        if (dis.magnitude > 5.0f)
+        if (dis.magnitude > 8.0f)
         {
             nav.SetDestination(target.position);        //도착할 목표 위치 지정 함수라네요? 
         }

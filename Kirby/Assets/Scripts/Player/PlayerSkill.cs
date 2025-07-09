@@ -17,6 +17,10 @@ public class PlayerSkill : MonoBehaviour
     public float attackRange = 3f;
     public LayerMask enemyLayer;
 
+    public KeyCode PowerRoarKey = KeyCode.Q;          //차지
+    public KeyCode BeatShotKey = KeyCode.E;          //리듬
+    public KeyCode GuitarFinisherKey = KeyCode.X;        //궁
+
     private void Awake()
     {
         beatShotCoolTimer = 0;
@@ -32,9 +36,9 @@ public class PlayerSkill : MonoBehaviour
     }
     void Update()
     {
-        //if(SonicRoarCoolTimer > 0)
+        //if (SonicRoarCoolTimer > 0)
         //{
-        //    SonicRoarCoolTimer -= Time.deltaTime; 
+        //    SonicRoarCoolTimer -= Time.deltaTime;
         //    if (SonicRoarCoolTimer <= 0)
         //    {
         //        PlayerStates(States.Default);
@@ -59,9 +63,9 @@ public class PlayerSkill : MonoBehaviour
         //    }
         //}
 
-        //if(guitarFinisherCoolTimer > 0)
+        //if (guitarFinisherCoolTimer > 0)
         //{
-        //    guitarFinisherCoolTimer -= Time.deltaTime; 
+        //    guitarFinisherCoolTimer -= Time.deltaTime;
         //    if (guitarFinisherCoolTimer <= 0)
         //    {
         //        PlayerStates(States.Default);
@@ -73,7 +77,7 @@ public class PlayerSkill : MonoBehaviour
             PlayerStates(States.SonicRoar);
         }
 
-        if(Input.GetKey(KeyCode.Q))
+        if(Input.GetKey(PowerRoarKey))
         {
             powerTimer += Time.deltaTime;
             Debug.Log(powerTimer);
@@ -84,13 +88,13 @@ public class PlayerSkill : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(BeatShotKey))
         {
             PlayerStates(States.BeatShot);
 
         }
 
-        if(Input.GetKeyDown(KeyCode.R))
+        if(Input.GetKeyDown(GuitarFinisherKey))
         {
             PlayerStates(States.GuitarFinisher);
 
@@ -108,7 +112,6 @@ public class PlayerSkill : MonoBehaviour
                 }
                 break;
             case States.PowerRoar:
-                //아니 이거 내적을 어떻게 구해요?? 
                 Collider[] enemies = Physics.OverlapSphere(transform.position, attackRange, enemyLayer);
                     
                 foreach (Collider enemys in enemies)

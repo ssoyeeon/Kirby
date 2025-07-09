@@ -4,38 +4,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using static GameManager;
 using static UnityEditor.PlayerSettings;
 
 public class PlayerController : MonoBehaviour
 {
 
-    [SerializeField] private float moveSpeed = 5f;
-    public float mouseSensitivity = 2f;
-    public Rigidbody rb;
-    public Transform cameraTransform;
-    public LayerMask groundMask;
-    private float verticalRotation = 0f;
-    private Vector3 moveDirection;
+    [SerializeField] private float moveSpeed = 5f;      //움직일 속도
+    public float mouseSensitivity = 2f;                 //마우스 감도
+    public Rigidbody rb;                                //플레이어 리지드바디
+    public Transform cameraTransform;                   //카메라
+    public LayerMask groundMask;                        //플레이어가 밟을 땅 
+    private float verticalRotation = 0f;                
+    private Vector3 moveDirection;                      
 
-    public Animator animator;
+    public Animator animator;       //플레이어 애니메이션
 
-    public CinemachineVirtualCamera virCamera;
+    public CinemachineVirtualCamera virCamera;      //시네머신카메라
 
-    public GameObject boss;
+    public GameObject boss;     //보스 캐릭터
 
-    bool isDrink;
-    bool isBoss;
+    bool isDrink;       //아이템 - 음료
+    bool isBoss;        //보스
 
-    float drinkTimer;
-    float bossTimer;
+    float drinkTimer;   //음료 타이머
+    float bossTimer;    //보스 타이머
 
-    public int Php = 100;
-    Vector3 asd;
-    public KeyCode PowerRoarKey = KeyCode.Q;          //차지
-    public KeyCode BeatShotKey = KeyCode.E;          //리듬
-    public KeyCode GuitarFinisherKey = KeyCode.X;        //궁
+    public int Php = 100;       //플레이어 HP
 
-    GameManager gameManager;
+    bool isGrounded;
+    float jumpTime;
+    public float jumpForce;
 
     private void Awake()
     {
@@ -46,13 +45,14 @@ public class PlayerController : MonoBehaviour
         }
         else
             this.gameObject.transform.position = new Vector3(0, 0, 0);
+        GameManager.Instance.ChangeState(GameState.Playing);
     }
 
     void Start()
     {
         //Cursor.lockState = CursorLockMode.Locked;
         //virCamera.m_Lens.Dutch = 180;        //카메라 반전
-        //GameManager.Instance
+        
     }
 
     void Update()
@@ -71,7 +71,24 @@ public class PlayerController : MonoBehaviour
         moveDirection = transform.right * moveX + transform.forward * moveZ;
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1f); // 대각선 이동 속도 정규화
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true && jumpTime <= 0)
+        {
+            rb.AddForce(Vector3.up * 10, ForceMode.Impulse);
+            jumpTime = 1f;
+            isGrounded = false;
+            Debug.Log("Jump");
+        }
+        else if (isGrounded == false)
+        {
+            jumpTime -= Time.deltaTime;
+            if (jumpTime < 0)
+            {
+                jumpTime = 0;
+                isGrounded = true;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("New Scene");
         }
