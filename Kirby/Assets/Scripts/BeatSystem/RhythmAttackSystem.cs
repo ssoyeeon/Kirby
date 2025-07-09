@@ -5,7 +5,9 @@ public class RhythmAttackSystem : MonoBehaviour
 {
     [Header("리듬 설정")]
     public float bpm = 120f; // 분당 비트 수
-    public float beatTolerance = 0.2f; // 리듬 허용 오차
+    public float beatTolerancePerfect = 0.2f; // 리듬 허용 오차
+    public float beatToleranceGood = 0.4f; // 리듬 허용 오차
+    public float beatToleranceBad = 0.6f; // 리듬 허용 오차
 
     [Header("공격 설정")]
     public float attackForce = 10f;
@@ -30,7 +32,7 @@ public class RhythmAttackSystem : MonoBehaviour
     private int comboCount = 0;
     private float comboTimer = 0f;
     private float comboWindow = 1f;
-
+    bool isOnBeat;
     void Start()
     {
         beatInterval = 60f / bpm;
@@ -93,30 +95,42 @@ public class RhythmAttackSystem : MonoBehaviour
         float timeToBeat = Mathf.Abs((currentTime - gameStartTime) % beatInterval - beatInterval / 2);
 
         // 리듬에 맞는지 체크
-        bool isOnBeat = timeToBeat <= beatTolerance;
-
-        if (isOnBeat)
+        if(isOnBeat = timeToBeat <= beatTolerancePerfect)
         {
-            PerformAttack(true);
+            PerformAttack(true, 1);
+        }
+        else if(isOnBeat = timeToBeat <= beatToleranceGood)
+        {
+            PerformAttack(true, 2);
         }
         else
         {
-            PerformAttack(false);
+            PerformAttack(false, 3);
         }
     }
 
-    void PerformAttack(bool isRhythmic)
+    void PerformAttack(bool isRhythmic , int RhythmJudgment)
     {
         StartCoroutine(AttackCooldown());
 
         float finalAttackForce = attackForce;
 
-        if (isRhythmic)
+        if (isRhythmic && RhythmJudgment == 1)
         {
-            // 리듬에 맞으면 강한 공격
+            // Perfect 판정이면 강한 공격
             comboCount++;
             comboTimer = comboWindow;
             finalAttackForce *= (1f + comboCount * 0.5f); // 콤보에 따라 데미지 증가
+
+            // 화면 효과
+            StartCoroutine(RhythmicAttackEffect());
+        }
+        if (isRhythmic && RhythmJudgment == 2)
+        {
+            // GOOD 판정이면 조금 약해진 공격
+            comboCount++;
+            comboTimer = comboWindow;
+            finalAttackForce *= (0.8f + comboCount * 0.5f); // 콤보에 따라 데미지 증가
 
             // 화면 효과
             StartCoroutine(RhythmicAttackEffect());
@@ -260,7 +274,7 @@ public class RhythmAttackSystem : MonoBehaviour
 
         // 리듬 가이드
         float timeToBeat = Mathf.Abs((Time.time - gameStartTime) % beatInterval - beatInterval / 2);
-        bool isInBeatWindow = timeToBeat <= beatTolerance;
+        bool isInBeatWindow = timeToBeat <= beatTolerancePerfect;
 
         GUI.color = isInBeatWindow ? Color.green : Color.white;
         GUI.Label(new Rect(10, 50, 200, 30), isInBeatWindow ? "리듬 타이밍!" : "리듬 대기...");

@@ -284,10 +284,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6830101962358524740, guid: ed84b15b632f06b45978ed64721ae6c6,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1227566808}
-    - targetCorrespondingSourceObject: {fileID: 6830101962358524740, guid: ed84b15b632f06b45978ed64721ae6c6,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1227566809}
   m_SourcePrefab: {fileID: 100100000, guid: ed84b15b632f06b45978ed64721ae6c6, type: 3}
 --- !u!4 &205481188 stripped
@@ -1679,7 +1675,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bpm: 120
-  beatTolerance: 0.2
+  beatTolerancePerfect: 0.2
+  beatToleranceGood: 0.4
+  beatToleranceBad: 0.6
   attackForce: 10
   attackRange: 5
   enemyLayer:
@@ -1786,32 +1784,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1227566808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1227566801}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a21af9e9b06598b4d912a565d41524fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  beatShotCoolTimer: 0
-  powerCoolTimer: 0
-  powerTimer: 0
-  guitarFinisherCoolTimer: 0
-  SonicRoarCoolTimer: 0
-  enemy: {fileID: 0}
-  playerCamera: {fileID: 330585545}
-  attackRange: 3
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  PowerRoarKey: 113
-  BeatShotKey: 101
-  GuitarFinisherKey: 120
 --- !u!114 &1227566809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1826,11 +1798,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skills:
   - skillName: "\uC88C\uD074\uB9AD"
-    cooldownTime: 1.5
+    cooldownTime: 0.3
     cooldownImage: {fileID: 0}
     cooldownText: {fileID: 0}
   - skillName: q
-    cooldownTime: 2
+    cooldownTime: 4
     cooldownImage: {fileID: 0}
     cooldownText: {fileID: 0}
   - skillName: e
@@ -1838,7 +1810,7 @@ MonoBehaviour:
     cooldownImage: {fileID: 0}
     cooldownText: {fileID: 0}
   - skillName: r
-    cooldownTime: 0
+    cooldownTime: 10
     cooldownImage: {fileID: 0}
     cooldownText: {fileID: 0}
   skillKeys: 43010000710000006500000072000000
@@ -1846,11 +1818,13 @@ MonoBehaviour:
   guitarFinisherEndTimer: 0
   enemy: {fileID: 0}
   playerCamera: {fileID: 330585545}
-  attackRange: 3
+  attackRange: 10
   Etimer: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  Prefab: {fileID: 77796283424172426, guid: d5ba0fccca0691144a0af8b396b8f761, type: 3}
+  Prefab2: {fileID: 77796283424172426, guid: d5ba0fccca0691144a0af8b396b8f761, type: 3}
 --- !u!1 &1550787958
 GameObject:
   m_ObjectHideFlags: 0

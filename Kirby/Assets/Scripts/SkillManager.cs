@@ -20,6 +20,9 @@ public class SkillManager : MonoBehaviour
     public float attackRange = 3f;
     public float Etimer;
     public LayerMask enemyLayer;
+
+    public GameObject Prefab;
+    public GameObject Prefab2;
     
     void Start()
     {
@@ -117,6 +120,7 @@ public class SkillManager : MonoBehaviour
                 if (Physics.Raycast(ray, out RaycastHit hit, attackRange, enemyLayer))
                 {
                     EnemyHealth enemey = hit.collider.GetComponent<EnemyHealth>();
+                    Instantiate(Prefab, this.gameObject.transform.position + new Vector3(0,1,0), Quaternion.LookRotation(this.transform.forward));
                     enemey.TakeDamage(10, true);
                 }
                 break;
@@ -133,6 +137,8 @@ public class SkillManager : MonoBehaviour
                         EnemyHealth enemyHealth = enemys.GetComponent<EnemyHealth>();
                         if (enemyHealth != null)
                         {
+                            Instantiate(Prefab2, this.gameObject.transform.position , Quaternion.LookRotation(this.transform.forward));
+                            Destroy(Prefab2);
                             enemyHealth.TakeDamage(10, true);
                         }
                     }
