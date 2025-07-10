@@ -27,6 +27,7 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         playerController = FindObjectOfType<PlayerController>(); 
+        target = playerController.transform;
     }
 
     void Update()

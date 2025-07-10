@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using static GameManager;
 using static UnityEditor.PlayerSettings;
 
 public class PlayerController : MonoBehaviour
@@ -38,14 +37,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        if (GameManager.Instance.isClick == true)
-        {
-            GameManager.Instance.LoadVector();
-            this.gameObject.transform.position = GameManager.Instance.savePoint;
-        }
-        else
-            this.gameObject.transform.position = new Vector3(0, 0, 0);
-        GameManager.Instance.ChangeState(GameState.Playing);
+
     }
 
     void Start()
@@ -90,7 +82,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("New Scene");
+            //SceneManager.LoadScene("New Scene");
         }
 
         if(isDrink == true)
@@ -147,9 +139,7 @@ public class PlayerController : MonoBehaviour
         }
         if(other.CompareTag("Save1"))
         {
-            GameManager.Instance.savePoint = other.gameObject.transform.position;
-            GameManager.Instance.isSaved = true;
-            GameManager.Instance.SaveVector();
+
         }
         if(other.CompareTag("Boss"))
         {
